@@ -24,6 +24,6 @@ def music_library_list(request):
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-@api_view(['GET'])
+@api_view(['GET', 'PUT', 'DELETE'])
 def music_library_detail(request, pk):
     pass

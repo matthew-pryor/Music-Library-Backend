@@ -7,3 +7,11 @@ from .models import Music
 
 
 # Create your views here.
+
+@api_view(['GET'])
+def music_library_list(request):
+    pass
+
+@api_view(['GET'])
+def music_library_detail(request, pk):
+    pass

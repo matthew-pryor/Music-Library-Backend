@@ -1,9 +1,10 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
-from django.shortcuts import get_list_or_404, get_object_or_404
+from django.shortcuts import get_object_or_404
 from .serializers import MusicSerializer
 from .models import Music
+from music_library import serializers
 
 
 # Create your views here.
@@ -26,4 +27,18 @@ def music_library_list(request):
 
 @api_view(['GET', 'PUT', 'DELETE'])
 def music_library_detail(request, pk):
-    pass
+    music = get_object_or_404(Music, pk=pk)
+
+    if request.method == 'GET':
+        serializer = MusicSerializer(music)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    elif request.method == 'PUT':
+        serializer = MusicSerializer(music, data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
+
+    elif request.method == 'DELETE':
+        music.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)

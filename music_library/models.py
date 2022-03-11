@@ -1,5 +1,3 @@
-from turtle import title
-from django.db import models
 from django.forms import CharField, DateField
 from django.db import models
 
